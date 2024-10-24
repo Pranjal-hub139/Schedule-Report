@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const Weekly = ({ selectedDay, onSelectDay }) => {
+const Weekly = ({ selectedDay, onSelectDay, skipWeekends }) => {
   const [selected, setSelected] = useState(selectedDay);
 
-  const daysOfWeek = [
+  
+  let daysOfWeek = [
     { id: '1', label: 'Monday' },
     { id: '2', label: 'Tuesday' },
     { id: '3', label: 'Wednesday' },
@@ -13,9 +14,10 @@ const Weekly = ({ selectedDay, onSelectDay }) => {
     { id: '5', label: 'Friday' },
     { id: '6', label: 'Saturday' },
     { id: '7', label: 'Sunday' },
-  ];  
-
-  
+  ]
+  if (skipWeekends) {
+    daysOfWeek = daysOfWeek.filter(day => day.label !== 'Saturday' && day.label !== 'Sunday');
+  }
 
   const handleSelect = (day) => {
     setSelected(day);
@@ -24,7 +26,6 @@ const Weekly = ({ selectedDay, onSelectDay }) => {
 
   return (
     <View style={styles.container}>
-     
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {daysOfWeek.map((day) => (
           <TouchableOpacity
@@ -48,12 +49,6 @@ const Weekly = ({ selectedDay, onSelectDay }) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 20,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#001F3F',
-    marginBottom: 10,
   },
   dayBox: {
     flexDirection: 'row',

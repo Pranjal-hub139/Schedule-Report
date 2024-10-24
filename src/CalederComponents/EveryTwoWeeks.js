@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const EveryTwoWeeks = ({ selectedDay, onSelectDay }) => {
+const EveryTwoWeeks = ({ selectedDay, onSelectDay,skipWeekends }) => {
   const [selected, setSelected] = useState(selectedDay);
 
-  const daysOfWeek = [
+  let daysOfWeek = [
     { id: '1', label: 'Monday' },
     { id: '2', label: 'Tuesday' },
     { id: '3', label: 'Wednesday' },
@@ -15,6 +15,9 @@ const EveryTwoWeeks = ({ selectedDay, onSelectDay }) => {
     { id: '7', label: 'Sunday' },
   ];
 
+  if (skipWeekends) {
+    daysOfWeek = daysOfWeek.filter(day => day.label !== 'Saturday' && day.label !== 'Sunday');
+  }
   const handleSelect = (day) => {
     setSelected(day);
     onSelectDay(day);

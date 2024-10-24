@@ -7,7 +7,7 @@ import Monthly from './Monthly';
 import Yearly from './Yearly';
 import Quarterly from './Quarterly';
 
-const AllCalenderRadioBtns = ({ selectedFrequency, onSelect, onSelectDate, onSelectDay }) => {
+const AllCalenderRadioBtns = ({ selectedFrequency, onSelect, onSelectDate, onSelectDay,isSkipWeekends }) => {
   const [selectedOption, setSelectedOption] = useState(selectedFrequency);
 
   const options = [
@@ -51,10 +51,14 @@ const AllCalenderRadioBtns = ({ selectedFrequency, onSelect, onSelectDate, onSel
             </TouchableOpacity>
 
             {selectedOption === 'Weekly' && option.label === 'Weekly' && (
-              <Weekly onSelectDay={handleDaySelection} />
+              <Weekly onSelectDay={handleDaySelection} 
+              skipWeekends={isSkipWeekends}  
+              />
             )}
             {selectedOption === 'Every 2 Weeks' && option.label === 'Every 2 Weeks' && (
-              <EveryTwoWeeks onSelectDay={handleDaySelection} />
+              <EveryTwoWeeks onSelectDay={handleDaySelection}
+              skipWeekends={isSkipWeekends}
+               />
             )}
             {selectedOption === 'Monthly' && option.label === 'Monthly' && (
               <Monthly onSelectDate={handleDateSelection} />

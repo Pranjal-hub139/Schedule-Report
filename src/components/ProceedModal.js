@@ -109,6 +109,7 @@ const ProceedModal = ({ visible, onClose, selectedOptions, emails, selectedVehic
                 onSelect={(value) => setSelectedFrequency(value)}
                 onSelectDate={handleSelectDate}
                 onSelectDay={handleSelectDay}
+                isSkipWeekends={isSkipWeekends}
                 
               />
               

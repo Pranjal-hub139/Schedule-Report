@@ -8,11 +8,11 @@ const Quarterly = ({ onSelectDate }) => {
 
   const getQuarterDates = () => {
     const month = new Date().getMonth();
-    const quarter = Math.floor(month / 4);
+    const quarter = Math.floor(month / 3);
     
-    const firstMonthOfQuarter = quarter * 4;
+    const firstMonthOfQuarter = quarter * 3;
     const firstDateOfQuarter = new Date(new Date().getFullYear(), firstMonthOfQuarter, 1);
-    const lastDateOfQuarter = new Date(new Date().getFullYear(), firstMonthOfQuarter + 4, 0);
+    const lastDateOfQuarter = new Date(new Date().getFullYear(), firstMonthOfQuarter + 3, 0);
 
     return { firstDateOfQuarter, lastDateOfQuarter };
   };
