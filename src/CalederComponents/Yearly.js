@@ -2,52 +2,54 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const Yearly = () => {
+const Yearly = ({ onSelectDate }) => {
   const [date, setDate] = useState(new Date());
-  const [showCalendar, setShowCalendar] = useState(false); // To show/hide the calendar for custom date selection
+  const [showCalendar, setShowCalendar] = useState(false);
 
-  // Get the first and last date of the current year
-  const firstDateOfYear = new Date(new Date().getFullYear(), 0, 1);
-  const lastDateOfYear = new Date(new Date().getFullYear(), 11, 31);
+  const currentYear = new Date().getFullYear();
+  const firstDateOfYear = new Date(currentYear, 0, 1);
+  const lastDateOfYear = new Date(currentYear, 11, 31);
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShowCalendar(false); // Hide the calendar after selecting a date
-    setDate(currentDate); // Set the selected date
+    const currentDate = selectedDate || date; 
+    if (event.type === 'set') {
+      setShowCalendar(false);
+      setDate(currentDate);
+      onSelectDate(currentDate);
+    } else {
+      setShowCalendar(false); 
+    }
+  };
+
+  const handleDateSelection = (selectedDate) => {
+    setDate(selectedDate);
+    onSelectDate(selectedDate);
   };
 
   return (
     <View style={styles.container}>
-      
-      
-      {/* TouchableOpacity for the first date of the year */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.optionButton}
-        onPress={() => setDate(firstDateOfYear)}
+        onPress={() => handleDateSelection(firstDateOfYear)}
       >
         <Text style={styles.optionText}>First Date of the Year: {firstDateOfYear.toDateString()}</Text>
       </TouchableOpacity>
-      
-      {/* TouchableOpacity for the last date of the year */}
-      <TouchableOpacity 
+
+      <TouchableOpacity
         style={styles.optionButton}
-        onPress={() => setDate(lastDateOfYear)}
+        onPress={() => handleDateSelection(lastDateOfYear)}
       >
         <Text style={styles.optionText}>Last Date of the Year: {lastDateOfYear.toDateString()}</Text>
       </TouchableOpacity>
 
-      {/* TouchableOpacity for custom date selection */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.optionButton}
         onPress={() => setShowCalendar(true)}
       >
         <Text style={styles.optionText}>Custom Date</Text>
-        <Text style={styles.dateText}>  {`Selected Date: ${date.toDateString()}`}</Text>
-       
+        <Text style={styles.dateText}>Selected Date: {date.toDateString()}</Text>
       </TouchableOpacity>
-      
 
-      {/* Show the calendar for custom date selection, with previous dates disabled */}
       {showCalendar && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -55,7 +57,7 @@ const Yearly = () => {
           mode="date"
           is24Hour={true}
           onChange={onChange}
-          minimumDate={new Date()} // Disable previous dates (including today if desired)
+          minimumDate={firstDateOfYear} // Change this to limit the selection to the year's range
         />
       )}
     </View>
@@ -83,17 +85,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 15,
     alignItems: 'center',
-    
   },
   optionText: {
     fontSize: 16,
-    color:'black',
+    color: 'black',
     fontWeight: '500',
   },
   dateText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'black', // Text color
+    color: 'black',
   },
 });
 

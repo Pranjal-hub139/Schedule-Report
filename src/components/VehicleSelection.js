@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { Picker } from '@react-native-picker/picker';
-import data from '../VehicleData.json'; // Adjust the path as necessary
+import data from '../VehicleData.json'; 
 
 const vehicleData = data.vehicles;
 
 const VehicleSelection = ({ selectedVehicles, setSelectedVehicles }) => {
-  const [selectedBranch, setSelectedBranch] = useState('all'); // State for selected branch
-  const [vinSearch, setVinSearch] = useState(''); // State for VIN search
+  const [selectedBranch, setSelectedBranch] = useState('all'); 
+  const [vinSearch, setVinSearch] = useState(''); 
 
-  // Filter vehicles based on branch and VIN search
+ 
   const filteredVehicles = vehicleData.filter(vehicle => {
     const matchesBranch = selectedBranch === 'all' || vehicle.branch.toLowerCase() === selectedBranch.toLowerCase();
     const matchesVin = vehicle.vin.toLowerCase().includes(vinSearch.toLowerCase()) ||
@@ -23,7 +23,7 @@ const VehicleSelection = ({ selectedVehicles, setSelectedVehicles }) => {
     if (selectedVehicles.includes(vehicle.registration_number)) {
       setSelectedVehicles(selectedVehicles.filter(item => item !== vehicle.registration_number));
     } else {
-      if (selectedVehicles.length < 5) { // Limit selection to 5 vehicles
+      if (selectedVehicles.length < 5) { 
         setSelectedVehicles([...selectedVehicles, vehicle.registration_number]);
       } else {
         alert("You can only select up to 5 vehicles.");
@@ -69,12 +69,12 @@ const VehicleSelection = ({ selectedVehicles, setSelectedVehicles }) => {
           )}
           keyExtractor={item => item.vin}
           contentContainerStyle={styles.listContent}
-          showsVerticalScrollIndicator={true} // Enable scrollbar
-          nestedScrollEnabled={true} // Allow nested scrolling (if applicable)
+          showsVerticalScrollIndicator={true} 
+          nestedScrollEnabled={true} 
         />
       </View>
 
-      {/* Show selected vehicles */}
+    
       {selectedVehicles.length > 0 && (
         <View style={styles.selectedContainer}>
           <Text style={styles.selectedLabel}>Selected Vehicles:</Text>
@@ -91,7 +91,7 @@ const VehicleSelection = ({ selectedVehicles, setSelectedVehicles }) => {
               </View>
             )}
             keyExtractor={(item) => item}
-            showsVerticalScrollIndicator={true} // Enable vertical scrollbar
+            showsVerticalScrollIndicator={true} 
             contentContainerStyle={styles.selectedItemsContainer}
           />
         </View>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginVertical: 5,
-    color: '#001F3F', // Dark blue color for the label
+    color: '#001F3F', 
   },
   picker: {
     height: 40,
@@ -130,15 +130,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: '90%',
     marginBottom: 10,
-    backgroundColor: '#fff', // White background for search input
+    backgroundColor: '#fff', 
   },
   listContainer: {
-    maxHeight: 300, // Limit the height to enable scrolling when content exceeds this height
+    maxHeight: 300, 
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 5,
-    backgroundColor: '#fff', // White background for the list
+    backgroundColor: '#fff', 
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   optionText: {
     marginLeft: 10,
     flex: 1,
-    color: 'black', // Set text color to black
+    color: 'black', 
   },
   selectedContainer: {
     marginTop: 10,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   selectedLabel: {
     fontWeight: 'bold',
     marginBottom: 5,
-    color: '#001F3F', // Dark blue color for the label
+    color: '#001F3F', 
   },
   selectedItem: {
     flexDirection: 'row',
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
   selectedText: {
     marginRight: 10,
-    color: 'black', // Set text color to black
+    color: 'black',  
   },
   removeButton: {
     color: 'red',
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
    
   },
   selectedItemsContainer: {
-    // You can add styling here if needed
+    
   },
 });
 

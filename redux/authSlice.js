@@ -9,14 +9,14 @@ const users = [
   { id: 5, name: 'Rajesh Powale', email: 'rajeshpowale@gmail.com', password: 'Rajesh123@' },
 ];
 
-// Initial state
+
 const initialState = {
   isLoggedIn: false,
   currentUser: null,
   error: null,
 };
 
-// Slice
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,

@@ -1,12 +1,12 @@
-// TimeRadioButton.js
+
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Importing Material Icons
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
 
 const TimeRadioBtn = ({ selectedTime, onSelect }) => {
   const options = [
-    { id: '1', label: '9:00 AM' },
-    { id: '2', label: '5:00 PM' },
+    {  label: '9:00 AM' },
+    {  label: '5:00 PM' },
   ];
 
   return (
@@ -15,16 +15,16 @@ const TimeRadioBtn = ({ selectedTime, onSelect }) => {
       <View style={styles.optionContainer}>
       {options.map(option => (
         <TouchableOpacity 
-          key={option.id} 
+          key={option.label} 
           style={styles.optionContainer} 
-          onPress={() => onSelect(option.id)} // Pass the ID when selected
+          onPress={() => onSelect(option.label)} 
         >
           <Icon 
-            name={selectedTime === option.id ? 'radio-button-checked' : 'radio-button-unchecked'} // Use checked and unchecked icons
+            name={selectedTime === option.label ? 'radio-button-checked' : 'radio-button-unchecked'} 
             size={24} 
-            color={selectedTime === option.id ? '#001F3F' : '#888'} // Change color based on selection
+            color={selectedTime === option.label ? '#001F3F' : '#888'} 
           />
-          <Text style={[styles.optionText, { fontWeight: selectedTime === option.id ? 'bold' : 'normal' }]}>
+          <Text style={[styles.optionText, { fontWeight: selectedTime === option.label ? 'bold' : 'normal' }]}>
             {option.label}
           </Text>
         </TouchableOpacity>
@@ -37,7 +37,7 @@ const TimeRadioBtn = ({ selectedTime, onSelect }) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 20,
-    //flexDirection:'row'
+    
   },
   title: {
     fontSize: 18,
@@ -52,10 +52,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginEnd:20
   },
-//   optionsContainer: {
-//     flexDirection: 'row', // Align options side by side
-//     justifyContent: 'space-between', // Space them evenly
-//   },
+
   optionText: {
     marginLeft: 10,
     fontSize: 16,

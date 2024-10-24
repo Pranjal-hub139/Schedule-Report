@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, StyleSheet, ScrollView } from 'react-native';
-import MultiSelect from '../components/MultiSelect'; // Adjust the import path as necessary
-import EmailInModal from './EmailInModal'; // Ensure the path is correct
+import MultiSelect from '../components/MultiSelect'; 
+import EmailInModal from './EmailInModal'; 
 import ProceedCancelBtns from './ProceedCancelBtns';
-import ProceedModal from './ProceedModal'; // Import the ProceedModal
+import ProceedModal from './ProceedModal'; 
 import ScheduleReportTitle from './ScheduleReportTitle';
-import VehicleSelection from './VehicleSelection'; // Import the VehicleSelection component
+import VehicleSelection from './VehicleSelection'; 
 
 const CustomModal = ({ visible, onClose }) => {
   const options = [
@@ -16,15 +16,15 @@ const CustomModal = ({ visible, onClose }) => {
   ];
 
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [emails, setEmails] = useState([]); // Initialize with an empty array
-  const [proceedModalVisible, setProceedModalVisible] = useState(false); // State for the ProceedModal
-  const [selectedVehicles, setSelectedVehicles] = useState([]); // State for selected vehicles
+  const [emails, setEmails] = useState([]); 
+  const [proceedModalVisible, setProceedModalVisible] = useState(false); 
+  const [selectedVehicles, setSelectedVehicles] = useState([]); 
   const[selectedBranch,setSelectedBranch]=useState([]);
   const[vinSearch,setVinSearch]=useState([]);
 
   const handleAddEmail = (email) => {
-    if (email && !emails.includes(email)) { // Avoid duplicates
-      setEmails([...emails, email]); // Add email to the list
+    if (email && !emails.includes(email)) { 
+      setEmails([...emails, email]); 
     }
   };
 
@@ -33,10 +33,10 @@ const CustomModal = ({ visible, onClose }) => {
     setEmails(newEmails);
   };
 
-  const isProceedEnabled = selectedOptions.length > 0 && emails.length > 0; // Enable if conditions met
+  const isProceedEnabled = selectedOptions.length > 0 && emails.length > 0; 
 
   const handleProceed = () => {
-    setProceedModalVisible(true); // Show the ProceedModal
+    setProceedModalVisible(true); 
   };
 
   return (
@@ -44,7 +44,7 @@ const CustomModal = ({ visible, onClose }) => {
       animationType="slide"
       transparent={true}
       visible={visible}
-      onRequestClose={onClose} // Close modal when back button is pressed
+      onRequestClose={onClose} 
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
@@ -53,14 +53,14 @@ const CustomModal = ({ visible, onClose }) => {
             <View style={styles.separator}></View>
             <Text style={styles.title}>Select Report Type</Text>
             
-            {/* MultiSelectorCheckbox component */}
+           
             <MultiSelect
               options={options}
               selectedOptions={selectedOptions}
               onSelectionChange={setSelectedOptions}
             />
 
-            {/* Show VehicleSelection if "Vehicle Wise Report" is selected */}
+           
            {selectedOptions.includes('Vehicle Wise Report') && (
         <VehicleSelection
           selectedBranch={selectedBranch}
@@ -72,18 +72,18 @@ const CustomModal = ({ visible, onClose }) => {
         />
             )}
 
-            {/* Title for email input */}
+           
             <Text style={styles.emailTitle}>Enter Email IDs</Text>
 
-            {/* Email input fields */}
+           
             <EmailInModal
-              emails={emails} // Pass emails as a prop
-              onAddEmail={handleAddEmail} // Pass the method to add email
-              onRemoveEmail={handleRemoveEmail} // Pass the method to remove email
+              emails={emails} 
+              onAddEmail={handleAddEmail} 
+              onRemoveEmail={handleRemoveEmail} 
             />
           </ScrollView>
 
-          {/* Modal Buttons */}
+        
           <ProceedCancelBtns
             onProceed={handleProceed}
             onCancel={onClose}
@@ -93,13 +93,13 @@ const CustomModal = ({ visible, onClose }) => {
         </View>
       </View>
 
-      {/* Proceed Modal */}
+     
       <ProceedModal 
         visible={proceedModalVisible} 
         onClose={() => setProceedModalVisible(false)} 
         selectedOptions={selectedOptions || []} 
         emails={emails} 
-        selectedVehicles={selectedVehicles} // Pass selected vehicles
+        selectedVehicles={selectedVehicles} 
       />
     </Modal>
   );
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   scrollContainer: {
-    flexGrow: 1, // Ensure that the ScrollView takes up the necessary space
+    flexGrow: 1, 
   },
   title: {
     fontSize: 18,

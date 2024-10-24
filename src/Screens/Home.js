@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/authSlice';
 import { View, Button, TouchableOpacity, StyleSheet,Text } from 'react-native';
-import CustomModal from '../components/CustomModal'; // Import the CustomModal
+import CustomModal from '../components/CustomModal';
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -15,18 +15,19 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Centered Modal trigger button */}
+      
       <TouchableOpacity 
         style={styles.modalButton} 
+
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.modalButtonText}>Enter</Text>
+        <Text style={styles.modalButtonText}>Scheduler</Text>
       </TouchableOpacity>
 
-      {/* Custom Modal component */}
+     
       <CustomModal visible={modalVisible} onClose={() => setModalVisible(false)} />
 
-      {/* Logout button, positioned at the bottom */}
+     
       <Button title="Logout" onPress={handleLogout} />
     </View>
   );
@@ -35,8 +36,8 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center', // Center items vertically
-    alignItems: 'center', // Center items horizontally
+    justifyContent: 'center', 
+    alignItems: 'center', 
     backgroundColor: '#f0f0f0',
   },
   modalButton: {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 20,
     justifyContent: 'center',
-    alignItems: 'center', // Center text within button
+    alignItems: 'center', 
   },
   modalButtonText: {
     color: '#fff',

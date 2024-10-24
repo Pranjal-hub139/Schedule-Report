@@ -21,9 +21,9 @@ const EmailInModal = ({ emails, onAddEmail, onRemoveEmail }) => {
       return;
     }
 
-    onAddEmail(emailInput); // Call the parent method to add email
-    setEmailInput(''); // Clear input after adding
-    setError(''); // Clear any previous error
+    onAddEmail(emailInput); 
+    setEmailInput(''); 
+    setError(''); 
   };
 
   return (
@@ -76,15 +76,15 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   addButton: {
-    backgroundColor: '#001F3F', // Change color to your preference
+    backgroundColor: '#001F3F', 
     borderRadius: 30,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   addButtonText: {
-    color: '#fff', // Text color
-    fontSize: 14, // Adjust font size as needed
+    color: '#fff', 
+    fontSize: 14, 
   },
   emailList: {
     flexDirection: 'row',
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   removeButtonText: {
     fontWeight: 'bold',
-    color: '#d32f2f', // Red color for the cross
+    color: '#d32f2f', 
     fontSize: 23,
   },
   error: {

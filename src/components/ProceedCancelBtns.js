@@ -1,4 +1,3 @@
-// ModalButtons.js
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
@@ -8,10 +7,12 @@ const ProceedCancelBtns = ({ onProceed, onCancel, isProceedEnabled }) => {
       <TouchableOpacity style={styles.button} onPress={onCancel}>
         <Text style={styles.buttonText}>Cancel</Text>
       </TouchableOpacity>
+
+      
       <TouchableOpacity
-        style={[styles.button, !isProceedEnabled && styles.disabledButton]} // Apply disabled style if not enabled
-        onPress={onProceed}
-        disabled={!isProceedEnabled} // Disable if not enabled
+        style={[styles.button, !isProceedEnabled && styles.disabledButton]} 
+        disabled={!isProceedEnabled} 
+        onPress={onProceed} 
       >
         <Text style={styles.buttonText}>Proceed</Text>
       </TouchableOpacity>
@@ -24,22 +25,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
-    width: '100%', // Adjust width as needed
+    width: '100%',
   },
   button: {
     flex: 1,
-    marginHorizontal: 9, // Add margin between buttons
-    backgroundColor: '#001F3F', // Navy blue color
+    marginHorizontal: 9, 
+    backgroundColor: '#001F3F',
     borderRadius: 5,
     padding: 10,
-    alignItems: 'center', // Center the text in the button
-    
+    alignItems: 'center',
   },
   disabledButton: {
-    backgroundColor: '#A9A9A9', // Gray color for disabled button
+    backgroundColor: '#A9A9A9', 
   },
   buttonText: {
-    color: '#FFFFFF', // White text color
+    color: '#FFFFFF', 
     fontWeight: 'bold',
   },
 });

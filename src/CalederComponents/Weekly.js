@@ -13,7 +13,9 @@ const Weekly = ({ selectedDay, onSelectDay }) => {
     { id: '5', label: 'Friday' },
     { id: '6', label: 'Saturday' },
     { id: '7', label: 'Sunday' },
-  ];
+  ];  
+
+  
 
   const handleSelect = (day) => {
     setSelected(day);

@@ -1,13 +1,11 @@
-// MultiSelectorCheckbox.js
+
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import VehicleSelection from './VehicleSelection'; // Adjust the path if necessary
+
 
 const MultiSelect = ({ options, selectedOptions, onSelectionChange }) => {
-  const [selectedBranch, setSelectedBranch] = useState('all');
-  const [vinSearch, setVinSearch] = useState('');
-  const [selectedVehicles, setSelectedVehicles] = useState([]);
+  
 
   const handleCheckboxChange = (option) => {
     if (selectedOptions.includes(option)) {
@@ -19,7 +17,7 @@ const MultiSelect = ({ options, selectedOptions, onSelectionChange }) => {
 
   return (
     <View style={styles.container}>
-      {/* Multi-select checkboxes for options */}
+     
       {options.map((option) => (
         <View key={option} style={styles.checkboxContainer}>
           <CheckBox
@@ -30,18 +28,6 @@ const MultiSelect = ({ options, selectedOptions, onSelectionChange }) => {
           <Text style={styles.optionText}>{option}</Text>
         </View>
       ))}
-
-      {/* Show Vehicle Selection if "Vehicle Wise Report" is selected */}
-      {/* {selectedOptions.includes('Vehicle Wise Report') && (
-        <VehicleSelection
-          selectedBranch={selectedBranch}
-          setSelectedBranch={setSelectedBranch}
-          vinSearch={vinSearch}
-          setVinSearch={setVinSearch}
-          selectedVehicles={selectedVehicles}
-          setSelectedVehicles={setSelectedVehicles}
-        />
-      )} */}
 
 
     </View>

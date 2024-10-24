@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
-import dropDownIcon from '../../assets/dropDownIcon.png'; // Path to your dropdown open icon
-import dropDownOpenIcon from '../../assets/dropDownOpenIcon.png'; // Path to your dropdown close icon
+import dropDownIcon from '../../assets/dropDownIcon.png'; 
+import dropDownOpenIcon from '../../assets/dropDownOpenIcon.png'; 
 import ScheduleReportTitle from './ScheduleReportTitle';
 import TimeRadioBtn from './TimeRadioBtn';
 import SkipWeekendsToggle from './SkipWeekendsToggle';
@@ -9,19 +9,28 @@ import CancelDoneBtns from './CancelDoneBtns';
 import AllCalenderRadioBtns from '../CalederComponents/AllCalenderRadioBtns';
 import DoneModal from '../CalederComponents/DoneModal';
 
-const ProceedModal = ({ visible, onClose, selectedOptions, emails, selectedVehicles,selectedDate, }) => {
+const ProceedModal = ({ visible, onClose, selectedOptions, emails, selectedVehicles }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedTime, setSelectedTime] = useState();
+  const [selectedTime, setSelectedTime] = useState('');
   const [isSkipWeekends, setIsSkipWeekends] = useState(false);
   const [selectedFrequency, setSelectedFrequency] = useState(null);
- 
   const [isDoneModalVisible, setDoneModalVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const[selectedDay, setSelectedDay]= useState();
 
   const toggleSkipWeekends = () => {
     setIsSkipWeekends(!isSkipWeekends);
   };
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+  const handleSelectDate = (date) => {
+    setSelectedDate(date); 
+  };
+
+  const handleSelectDay = (day) => {
+    setSelectedDay(day); 
+  };
 
   const renderSection = (title, items) => (
     <View style={styles.section}>
@@ -39,18 +48,19 @@ const ProceedModal = ({ visible, onClose, selectedOptions, emails, selectedVehic
   );
 
   const handleDone = () => {
-    setDoneModalVisible(true); // Open DoneModal
+    
+    setDoneModalVisible(true); 
   };
 
   const closeDoneModal = () => {
-    setDoneModalVisible(false); // Close DoneModal
+    setDoneModalVisible(false); 
   };
 
-  const selectedParameters = [
-    ...selectedOptions,
-    ...selectedVehicles,
-    ...emails,
-  ]; // Combine selected parameters for display
+  // const selectedParameters = [
+  //   ...selectedOptions,
+  //   ...selectedVehicles,
+  //   ...emails,
+  // ]; 
 
   return (
     <View>
@@ -93,16 +103,21 @@ const ProceedModal = ({ visible, onClose, selectedOptions, emails, selectedVehic
                 isEnabled={isSkipWeekends} 
                 toggleSkipWeekends={toggleSkipWeekends} 
               />
+              
               <AllCalenderRadioBtns
-                selectedFrequency={selectedFrequency} 
-                onSelect={(value) => setSelectedFrequency(value)} 
+                selectedFrequency={selectedFrequency}
+                onSelect={(value) => setSelectedFrequency(value)}
+                onSelectDate={handleSelectDate}
+                onSelectDay={handleSelectDay}
+                
               />
+              
             </ScrollView>
              
             <View style={styles.buttonContainer}>
               <CancelDoneBtns
                 onCancel={onClose}
-                onDone={handleDone}  // Open DoneModal on 'Done'
+                onDone={handleDone}  
               />
             </View>
           </View>
@@ -110,6 +125,8 @@ const ProceedModal = ({ visible, onClose, selectedOptions, emails, selectedVehic
       </Modal>
 
       {/* DoneModal integrated within ProceedModal */}
+
+      
       <DoneModal
   visible={isDoneModalVisible}
   onClose={closeDoneModal}
@@ -118,6 +135,7 @@ const ProceedModal = ({ visible, onClose, selectedOptions, emails, selectedVehic
   selectedTime={selectedTime}
   selectedReports={selectedOptions}
   selectedVehicles={selectedVehicles}
+  selectedDay={selectedDay} // Pass selected day to DoneModal
   emails={emails}
 />
     </View>

@@ -11,11 +11,35 @@ export default function DoneModal({
   selectedReports,
   selectedVehicles,
   emails,
+  selectedDay,
 }) {
   const formatDate = (date) => {
     if (!date) return 'Not selected';
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return date.toLocaleDateString('en-US', options);
+  };
+
+  const renderScheduleDetails = () => {
+    switch (selectedFrequency) {
+      case 'Weekly':
+        return `Every ${selectedDay} at ${selectedTime}`;
+      case 'Every 2 Weeks':
+        return `Every other ${selectedDay} at ${selectedTime}`;
+      case 'Monthly':
+        return `On the ${selectedDate.getDate()}${getOrdinalSuffix(selectedDate.getDate())} of ${selectedDate.toLocaleString('default', { month: 'long' })} at ${selectedTime}`; // Updated line
+      default:
+        return `on ${formatDate(selectedDate)}, at ${selectedTime}`;
+    }
+  };
+
+  const getOrdinalSuffix = (day) => {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1:  return "st";
+      case 2:  return "nd";
+      case 3:  return "rd";
+      default: return "th";
+    }
   };
 
   return (
@@ -34,7 +58,7 @@ export default function DoneModal({
               You have scheduled the {selectedFrequency} report
             </Text>
             <Text style={styles.detail}>
-              on {formatDate(selectedDate)}, at {selectedTime}
+              {renderScheduleDetails()}
             </Text>
             
             <Text style={styles.subTitle}>Selected Reports</Text>

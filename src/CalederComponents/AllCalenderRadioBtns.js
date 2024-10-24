@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Weekly from './Weekly'; // Import the Weekly component
+import Weekly from './Weekly';
 import EveryTwoWeeks from './EveryTwoWeeks';
 import Monthly from './Monthly';
 import Yearly from './Yearly';
 import Quarterly from './Quarterly';
 
-
-const AllCalenderRadioBtns = ({ selectedFrequency, onSelect }) => {
+const AllCalenderRadioBtns = ({ selectedFrequency, onSelect, onSelectDate, onSelectDay }) => {
   const [selectedOption, setSelectedOption] = useState(selectedFrequency);
 
   const options = [
@@ -16,17 +15,26 @@ const AllCalenderRadioBtns = ({ selectedFrequency, onSelect }) => {
     { id: '2', label: 'Every 2 Weeks' },
     { id: '3', label: 'Monthly' },
     { id: '4', label: 'Quarterly' },
-    {id: '5',label:'Yearly'}
+    { id: '5', label: 'Yearly' }
   ];
+
+  
 
   const handlePress = (option) => {
     setSelectedOption(option);
     onSelect(option);
   };
 
+  const handleDateSelection = (date) => {
+    onSelectDate(date);
+  };
+
+  const handleDaySelection = (day) => {
+    onSelectDay(day);
+  };
+
   return (
     <View style={styles.container}>
-      
       <View style={styles.radioGroup}>
         {options.map((option) => (
           <View key={option.id}>
@@ -42,26 +50,21 @@ const AllCalenderRadioBtns = ({ selectedFrequency, onSelect }) => {
               <Text style={styles.label}>{option.label}</Text>
             </TouchableOpacity>
 
-            {/* Render Weekly.js below the Weekly option when it is selected */}
             {selectedOption === 'Weekly' && option.label === 'Weekly' && (
-              <Weekly selectedDay={null} onSelectDay={(day) => console.log(day)} />
+              <Weekly onSelectDay={handleDaySelection} />
             )}
-             {selectedOption === 'Every 2 Weeks' && option.label === 'Every 2 Weeks' && (
-              <EveryTwoWeeks selectedDay={null} onSelectDay={(day) => console.log(day)} />
+            {selectedOption === 'Every 2 Weeks' && option.label === 'Every 2 Weeks' && (
+              <EveryTwoWeeks onSelectDay={handleDaySelection} />
             )}
-              {selectedOption === 'Monthly' && option.label === 'Monthly' && (
-              <Monthly />
-
-               )}
-
-                {selectedOption === 'Quarterly' && option.label === 'Quarterly'&&(
-                <Quarterly/>
-               )}
-            
-            {selectedOption=='Yearly' && option.label === 'Yearly' && (
-              <Yearly/>
+            {selectedOption === 'Monthly' && option.label === 'Monthly' && (
+              <Monthly onSelectDate={handleDateSelection} />
             )}
-
+            {selectedOption === 'Quarterly' && option.label === 'Quarterly' && (
+              <Quarterly onSelectDate={handleDateSelection} />
+            )}
+            {selectedOption === 'Yearly' && option.label === 'Yearly' && (
+              <Yearly onSelectDate={handleDateSelection} />
+            )}
           </View>
         ))}
       </View>
@@ -73,15 +76,8 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 20,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#001F3F',
-    marginBottom: 10,
-  },
   radioGroup: {
     flexDirection: 'column',
-  
   },
   radioButtonContainer: {
     flexDirection: 'row',

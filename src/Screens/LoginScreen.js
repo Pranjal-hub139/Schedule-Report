@@ -13,7 +13,7 @@ const Login = ({ navigation }) => {
     dispatch(login({ email, password }));
   };
 
-  // Use useEffect to navigate when isLoggedIn changes
+  
   useEffect(() => {
     if (isLoggedIn) {
       navigation.navigate('Home');
@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: '#4CAF50',
-    width: 120, // Fixed width
-    height: 40, // Fixed height
-    justifyContent: 'center', // Centering text vertically
-    alignItems: 'center', // Centering text horizontally
+    width: 120,
+    height: 40, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
     borderRadius: 5,
     marginTop: 10,
     marginLeft: 100,

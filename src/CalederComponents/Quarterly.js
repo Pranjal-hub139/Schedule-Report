@@ -2,58 +2,58 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const Quarterly = () => {
+const Quarterly = ({ onSelectDate }) => {
   const [date, setDate] = useState(new Date());
-  const [showCalendar, setShowCalendar] = useState(false); // To show/hide the calendar for custom date selection
+  const [showCalendar, setShowCalendar] = useState(false);
 
-  // Get the first and last date of the current quarter
   const getQuarterDates = () => {
     const month = new Date().getMonth();
-    const quarter = Math.floor(month / 3);
+    const quarter = Math.floor(month / 4);
     
-    const firstMonthOfQuarter = quarter * 3;
+    const firstMonthOfQuarter = quarter * 4;
     const firstDateOfQuarter = new Date(new Date().getFullYear(), firstMonthOfQuarter, 1);
-    const lastDateOfQuarter = new Date(new Date().getFullYear(), firstMonthOfQuarter + 3, 0); // Last day of the quarter
+    const lastDateOfQuarter = new Date(new Date().getFullYear(), firstMonthOfQuarter + 4, 0);
 
     return { firstDateOfQuarter, lastDateOfQuarter };
   };
 
   const { firstDateOfQuarter, lastDateOfQuarter } = getQuarterDates();
 
+  const handleDateChange = (selectedDate) => {
+    setDate(selectedDate);
+    onSelectDate(selectedDate);
+  };
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShowCalendar(false); // Hide the calendar after selecting a date
-    setDate(currentDate); // Set the selected date
+    setShowCalendar(false);
+    handleDateChange(currentDate);
   };
 
   return (
     <View style={styles.container}>
-      {/* TouchableOpacity for the first date of the quarter */}
       <TouchableOpacity 
         style={styles.optionButton}
-        onPress={() => setDate(firstDateOfQuarter)}
+        onPress={() => handleDateChange(firstDateOfQuarter)}
       >
         <Text style={styles.optionText}>First Date of the Quarter: {firstDateOfQuarter.toDateString()}</Text>
       </TouchableOpacity>
       
-      {/* TouchableOpacity for the last date of the quarter */}
       <TouchableOpacity 
         style={styles.optionButton}
-        onPress={() => setDate(lastDateOfQuarter)}
+        onPress={() => handleDateChange(lastDateOfQuarter)}
       >
         <Text style={styles.optionText}>Last Date of the Quarter: {lastDateOfQuarter.toDateString()}</Text>
       </TouchableOpacity>
 
-      {/* TouchableOpacity for custom date selection */}
       <TouchableOpacity 
         style={styles.optionButton}
         onPress={() => setShowCalendar(true)}
       >
         <Text style={styles.optionText}>Custom Date</Text>
-        <Text style={styles.dateText}>  {`Selected Date: ${date.toDateString()}`}</Text>
+        <Text style={styles.dateText}>Selected Date: {date.toDateString()}</Text>
       </TouchableOpacity>
 
-      {/* Show the calendar for custom date selection, with previous dates disabled */}
       {showCalendar && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -61,7 +61,7 @@ const Quarterly = () => {
           mode="date"
           is24Hour={true}
           onChange={onChange}
-          minimumDate={new Date(0)} // Allow selection from today onwards
+          minimumDate={new Date()}
         />
       )}
     </View>
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 16,
-    fontWeight: '6',
-    color: 'black', // Text color
+    fontWeight: 'bold',
+    color: 'black', 
   },
 });
 
