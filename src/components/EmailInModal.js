@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   emailTag: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#e0f7fa',
+    backgroundColor: '#cce5ff',
     borderRadius: 15,
     padding: 5,
     margin: 5,

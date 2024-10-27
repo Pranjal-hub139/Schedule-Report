@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Static users
 const users = [
   { id: 1, name: 'Pranjal Powale', email: 'pranjalpowale@gmail.com', password: 'Pranjal123@' },
   { id: 2, name: 'Akash Bhavar', email: 'akashbhavar@gmail.com', password: 'Akash123@' },

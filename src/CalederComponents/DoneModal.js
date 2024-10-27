@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import OkayModal from '../components/OkayModal';
 
 export default function DoneModal({
   visible,
@@ -13,10 +15,35 @@ export default function DoneModal({
   emails,
   selectedDay,
 }) {
+  const [showOkayModal, setShowOkayModal] = useState(false);
+
   const formatDate = (date) => {
     if (!date) return 'Not selected';
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return date.toLocaleDateString('en-US', options);
+  };
+
+  const handleOkayPress = async () => {
+    try {
+      const modalData = JSON.stringify({
+        selectedFrequency,
+        selectedDate,
+        selectedTime,
+        selectedReports,
+        selectedVehicles,
+        emails,
+        selectedDay,
+      });
+      await AsyncStorage.setItem('modalData', modalData);
+      onClose();
+      setShowOkayModal(true);
+    } catch (error) {
+      console.error('Error saving modal data:', error);
+    }
+  };
+
+  const handleCloseOkayModal = () => {
+    setShowOkayModal(false);
   };
 
   const renderScheduleDetails = () => {
@@ -26,7 +53,7 @@ export default function DoneModal({
       case 'Every 2 Weeks':
         return `Every other ${selectedDay} at ${selectedTime}`;
       case 'Monthly':
-        return `On the ${selectedDate.getDate()}${getOrdinalSuffix(selectedDate.getDate())} of ${selectedDate.toLocaleString('default', { month: 'long' })} at ${selectedTime}`; // Updated line
+        return `On the ${selectedDate.getDate()}${getOrdinalSuffix(selectedDate.getDate())} of ${selectedDate.toLocaleString('default', { month: 'long' })} at ${selectedTime}`;
       default:
         return `on ${formatDate(selectedDate)}, at ${selectedTime}`;
     }
@@ -35,63 +62,47 @@ export default function DoneModal({
   const getOrdinalSuffix = (day) => {
     if (day > 3 && day < 21) return 'th';
     switch (day % 10) {
-      case 1:  return "st";
-      case 2:  return "nd";
-      case 3:  return "rd";
+      case 1: return "st";
+      case 2: return "nd";
+      case 3: return "rd";
       default: return "th";
     }
   };
 
   return (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <ScrollView contentContainerStyle={styles.scrollContent}>
-            <Icon name="check-circle" size={64} color="#4CAF50" style={styles.icon} />
-            <Text style={styles.title}>Report scheduled successfully!</Text>
-            <Text style={styles.detail}>
-              You have scheduled the {selectedFrequency} report
-            </Text>
-            <Text style={styles.detail}>
-              {renderScheduleDetails()}
-            </Text>
-            
-            <Text style={styles.subTitle}>Selected Reports</Text>
-            {selectedReports.map((report, index) => (
-              <View key={index} style={styles.listItem}>
-                <Icon name="check" size={20} color="#4CAF50" style={styles.checkIcon} />
-                <Text style={styles.itemText}>{report}</Text>
-              </View>
-            ))}
-            
-            <Text style={styles.subTitle}>Selected Vehicles</Text>
-            {selectedVehicles.map((vehicle, index) => (
-              <View key={index} style={styles.listItem}>
-                <Icon name="directions-car" size={20} color="#001F3F" style={styles.checkIcon} />
-                <Text style={styles.itemText}>{vehicle}</Text>
-              </View>
-            ))}
-            
-            <Text style={styles.subTitle}>Mailed to</Text>
-            {emails.map((email, index) => (
-              <View key={index} style={styles.listItem}>
-                <Icon name="email" size={20} color="#001F3F" style={styles.checkIcon} />
-                <Text style={styles.itemText}>{email}</Text>
-              </View>
-            ))}
-          </ScrollView>
-          
-          <TouchableOpacity style={styles.okayButton} onPress={onClose}>
-            <Text style={styles.okayButtonText}>OKAY</Text>
-          </TouchableOpacity>
+    <>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={visible}
+        onRequestClose={onClose}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <ScrollView contentContainerStyle={styles.scrollContent}>
+              <Icon name="check" size={40} color="#4CAF50" style={styles.icon} />
+              <Text style={styles.title}>Report scheduled successfully!</Text>
+              <Text style={styles.detail}>You have scheduled the {selectedFrequency} report</Text>
+              <Text style={styles.detail}>{renderScheduleDetails()}</Text>
+
+              <Text style={styles.subTitle}>Selected Reports</Text>
+              {selectedReports.map((report, index) => (
+                <View key={index} style={styles.listItem}>
+                  <Icon name="check-circle" size={20} color="#4CAF50" style={styles.checkIcon} />
+                  <Text style={styles.itemText}>{report}</Text>
+                </View>
+              ))}
+            </ScrollView>
+
+            <TouchableOpacity style={styles.okayButton} onPress={handleOkayPress}>
+              <Text style={styles.okayButtonText}>OKAY</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+
+      <OkayModal visible={showOkayModal} onClose={handleCloseOkayModal} />
+    </>
   );
 }
 

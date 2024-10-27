@@ -74,6 +74,7 @@ const ProceedModal = ({ visible, onClose, selectedOptions, emails, selectedVehic
           <View style={styles.modalContent}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
               <ScheduleReportTitle/>
+              <View style={styles.separator}></View>
 
               <View style={styles.dropdownHeader}>
                 <Text style={styles.dropdownHeaderText}>Selected Parameters</Text>
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: 'white',
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
@@ -234,6 +235,14 @@ const styles = StyleSheet.create({
     color: '#001F3F',
     marginBottom: 10,
   },
+  separator: {
+    height: 1,          
+    width: '100%',      
+    backgroundColor: 'black', 
+    marginVertical: 4,
+    alignSelf: 'center', 
+  },
+
 });
 
 export default ProceedModal;

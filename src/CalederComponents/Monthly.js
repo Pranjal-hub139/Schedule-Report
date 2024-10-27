@@ -10,12 +10,12 @@ const Monthly = ({ onSelectDate }) => {
     if (event.type === 'set') {
       const currentDate = selectedDate || date;
       setDate(currentDate);
-      onSelectDate(currentDate); // Notify the parent component
+      onSelectDate(currentDate); 
     }
     setShow(false);
   };
 
-  // Format the date to a readable string
+  
   const formatDate = (date) => {
     if (!date) return '';
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -26,7 +26,7 @@ const Monthly = ({ onSelectDate }) => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.dateButton} onPress={() => setShow(true)}>
         <Text style={styles.dateButtonText}>
-          {`Selected Date: ${formatDate(date)}`}  {/* Updated this line */}
+          {`Selected Date: ${formatDate(date)}`} 
         </Text>
       </TouchableOpacity>
 
@@ -37,7 +37,7 @@ const Monthly = ({ onSelectDate }) => {
           mode="date"
           is24Hour={true}
           onChange={onChange}
-          minimumDate={new Date()} // Disable previous dates but allow the current date
+          minimumDate={new Date()} 
         />
       )}
     </View>

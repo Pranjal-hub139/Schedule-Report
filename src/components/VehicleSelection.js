@@ -131,6 +131,8 @@ const styles = StyleSheet.create({
     width: '90%',
     marginBottom: 10,
     backgroundColor: '#fff', 
+    color:'black'
+   
   },
   listContainer: {
     maxHeight: 300, 
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 5,
     padding: 5,
-    backgroundColor: '#b2ebf2',
+    backgroundColor: '#cce5ff',
     borderRadius: 5,
   },
   selectedText: {
